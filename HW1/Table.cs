@@ -1,16 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HW1
+namespace Lesson1
 {
-    public enum State
-    {
-        Free = 0,
-        Booked = 1
-    }
     public class Table
     {
         public State State { get; private set; }
@@ -21,17 +12,23 @@ namespace HW1
         {
             Id = id; //в учебном примере просто присвоим id при вызове
             State = State.Free; // новый стол всегда свободен
-            SeatsCount = Random.Shared.Next(2, 5); //пусть количество мест за каждым столом будет случайным, от 2х до 5ти
+            SeatsCount = Random.Next(2, 5); //пусть количество мест за каждым столом будет случайным, от 2х до 5ти
         }
+
         public bool SetState(State state)
         {
-            if (state == State)
-                return false;
+            lock (_lock)
+            {
+                if (state == State)
+                    return false;
 
-            State = state;
-            return true;
+                State = state;
+                return true;
+            }
         }
-       
-    }
 
+        private readonly object _lock = new object();
+        private static readonly Random Random = new();
+
+    }
 }

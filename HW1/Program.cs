@@ -1,60 +1,33 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
-namespace HW1
+namespace Restaraunt.Booking
 {
-    internal class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static async Task Main(string[] args)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
-            var rest = new Restaurant();
+            var rest = new Restaurant.Booking.Restaurant();
             while (true)
             {
-                Console.WriteLine("Привет! Желаете забронировать столик ? \n1 - мы уведомим Вас по  смс(асинхронно)" +
-                    "\n2 - подождите на линии, мы Вас оповестим (синхроннно)"); //приглашаем ко вводу
-                if (!int.TryParse(Console.ReadLine(), out var choice) && choice is not (1 or 2))
-                {
-                    Console.WriteLine("Введите, пожалуйста 1 или 2"); //всегда нужно защититься от невалидного ввода
-                }
+                await Task.Delay(10000);
+
+                //считаем что если уж позвонили, то столик забронировать хотим
+                Console.WriteLine("Привет! Желаете забронировать столик?");
+
                 var stopWatch = new Stopwatch();
-                stopWatch.Start();  //замерим потраченное нами время на бронирование, ведь наше время - самое дорогое что у нас есть
-                if (choice == 1)
-                {
-                    rest.BookFreeTableAsync(1); //забранируем с ответом по смс
-                }
-                else
-                {
-                    rest.BookFreeTable(1); //забранируем по звонку
-                }
-                Console.WriteLine("Спасибо за Ваше	обращение!");   //клиентд всегда нужно порадовать благодарностью
+                stopWatch.Start(); //замерим потраченное нами время на бронирование,
+                                   //ведь наше время - самое дорогое что у нас есть
+
+                rest.BookFreeTableAsync(1); //забронируем с ответом по смс
+
+                Console.WriteLine("Спасибо за Ваше обращение!"); //клиента всегда нужно порадовать благодарностью
                 stopWatch.Stop();
                 var ts = stopWatch.Elapsed;
-                Console.WriteLine($"{ts.Seconds}:{ts.Milliseconds}"); //выведем	потраченное нами	время
-
-
-                //Снятие брони
-                Console.WriteLine("Желаете снять бронь со столика ?" +
-                "\n1 - мы уведомим Вас по  смс(асинхронно)"+ "\n2 - подождите на линии, мы Вас оповестим (синхроннно)");
-                if (!int.TryParse(Console.ReadLine(), out var choiceDel) && choiceDel is not (1 or 2))
-                {
-                    Console.WriteLine("Введите, пожалуйста 1 или 2"); 
-                }
-                stopWatch.Start();  //замерим потраченное нами время на бронирование, ведь наше время - самое дорогое что у нас есть
-                if (choice == 1)
-                {
-                    rest.DelFreeTableAsync(1); //забранируем с ответом по смс
-                }
-                else
-                {
-                    rest.DelFreeTable(1); //забранируем по звонку
-                }
-                Console.WriteLine("Спасибо за Ваше	обращение!");   //клиентд всегда нужно порадовать благодарностью
-                stopWatch.Stop();
-                var tsDel = stopWatch.Elapsed;
-                Console.WriteLine($"{tsDel.Seconds}:{tsDel.Milliseconds}");
-
+                Console.WriteLine($"{ts.Seconds:00}:{ts.Milliseconds:00}"); //выведем потраченное нами время
             }
-
         }
     }
 }
