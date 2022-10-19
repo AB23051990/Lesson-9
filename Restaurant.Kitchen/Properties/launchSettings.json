@@ -1,6 +1,6 @@
 ﻿{
   "profiles": {
-    "Restaurant.Notification": {
+    "Restaraunt.Kitchen": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "environmentVariables": {
