@@ -11,7 +11,7 @@ namespace Restaurant.Messages
 
     public class TableBooked : ITableBooked
     {
-        public TableBooked(Guid orderId, bool success, Dish? preOrder = null)
+        public TableBooked(Guid orderId, bool success)
         {
             OrderId = orderId;            
             Success = success;            
