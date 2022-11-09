@@ -19,7 +19,7 @@ namespace Restaurant.Booking.Consumers
         {
             Console.WriteLine($"[OrderId: {context.Message.OrderId}]");
             var result = await _restaurant.BookFreeTableAsync(1);
-            
+            throw new AggregateException();
             await context.Publish<ITableBooked>(new TableBooked(context.Message.OrderId, result ?? false));
         }
     }
