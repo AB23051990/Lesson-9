@@ -42,7 +42,7 @@ namespace Restaurant.Notification
                     });
 
                     services.AddSingleton<Notifier>();
-                    services.AddMassTransitHostedService(true);
+                    //services.AddMassTransitHostedService(true);
                 });
     }
 }
