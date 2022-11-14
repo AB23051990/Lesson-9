@@ -39,11 +39,12 @@ namespace Restaurant.Kitchen
                                             TimeSpan.FromSeconds(2));
                                     }
                                 );*/
-                            })
+                            });
+                        /*
                             .Endpoint(e =>
                             {
                                 e.Temporary = true;
-                            }); ;
+                            }); ;*/
 
                         x.AddConsumer<KitchenBookingRequestFaultConsumer>();
                             /*.Endpoint(e =>
@@ -61,7 +62,12 @@ namespace Restaurant.Kitchen
                     });
 
                     services.AddSingleton<Manager>();
-
+                    services.Configure<MassTransitHostOptions>(options =>
+                    {
+                        options.WaitUntilStarted = true;
+                        options.StartTimeout = TimeSpan.FromSeconds(30);
+                        options.StopTimeout = TimeSpan.FromMinutes(1);
+                    });
                     /*services.AddMassTransitHostedService(true);*/
                 });
     }
